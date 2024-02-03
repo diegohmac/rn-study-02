@@ -1,11 +1,10 @@
-import { StatusBar } from 'expo-status-bar';
-import { Container, Title } from './styles';
+import { Container } from './styles';
+import { Header } from '@components/Header';
 
 export default function App() {
   return (
     <Container>
-      <Title>Groups</Title>
-      <StatusBar style="light" />
+      <Header />
     </Container>
   );
 }
