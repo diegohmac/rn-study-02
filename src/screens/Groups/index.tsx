@@ -7,7 +7,7 @@ import { FlatList } from 'react-native';
 import { EmptyList } from '@components/EmptyList';
 import { Button } from '@components/Button';
 
-export default function App() {
+export default function Groups() {
 
   const [groups, setGroups] = useState(['Gym Team', 'Gaming Team']);
 
