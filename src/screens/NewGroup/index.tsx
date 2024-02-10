@@ -3,8 +3,17 @@ import { Container, Content, Icon } from './styles';
 import { Header } from '@components/Header';
 import { Input } from '@components/Input';
 import { Button } from '@components/Button';
+import { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 
 export default function NewGroup() {
+  const [group, setGroup] = useState('');
+  const navigation = useNavigation();
+
+  function handleNewGroup() {
+    navigation.navigate('players', { group });
+  };
+
   return (
     <Container>
       <Header showBackButton />
@@ -16,8 +25,9 @@ export default function NewGroup() {
         />
         <Input 
           placeholder='Team name'
+          onChangeText={setGroup}
         />
-        <Button title='Create' style={{ marginTop: 24 }} />
+        <Button title='Create' style={{ marginTop: 24 }} onPress={handleNewGroup} disabled={!group} />
       </Content>
     </Container>
   );
