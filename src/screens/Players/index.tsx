@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FlatList } from 'react-native';
+import { Alert, FlatList } from 'react-native';
 import { RouteProp, useRoute } from '@react-navigation/native';
 
 import { Header } from '@components/Header';
@@ -12,6 +12,8 @@ import { EmptyList } from '@components/EmptyList';
 import { Button } from '@components/Button';
 
 import { Container, Form, HeaderList, PlayersAmount } from './styles';
+import { AppError } from '@utils/AppError';
+import { playerAddByGroup } from '@storage/player/playerAddByGroup';
 
 type RouteParams = {
   Params: {
@@ -22,11 +24,33 @@ type RouteParams = {
 export default function Players() {
 
   const [players, setPlayers] = useState<string[]>([])
-  const [teams, setTeams] = useState<string[]>([])
-  const [selectedTeam, setSelectedTeam] = useState<string>('')
+  const [selectedTeam, setSelectedTeam] = useState<string>('Team A')
+  const [newPlayerName, setNewPlayerName] = useState('')
 
   const route = useRoute<RouteProp<RouteParams>>();
-  const { group } = route.params
+  const { group } = route.params;
+
+  async function handleAddPlayer() {
+    if (newPlayerName.trim().length === 0) {
+      return Alert.alert('Invalid name', 'The player name cannot be empty');
+    }
+    
+    const newPlayer = {
+      name: newPlayerName,
+      team: selectedTeam,
+    }
+
+    try {
+      await playerAddByGroup(newPlayer, group);
+    } catch (error) {
+      if (error instanceof AppError) {
+        return Alert.alert('New Player', error.message);
+      }
+      console.log(error);
+      Alert.alert('New Player', 'An error occurred while adding the player');
+    }
+
+  }
 
   return (
     <Container>
@@ -39,12 +63,13 @@ export default function Players() {
         <Input
           placeholder='Player name'
           autoCorrect={false}
+          onChangeText={setNewPlayerName}
         />
-        <ButtonIcon icon='add' />
+        <ButtonIcon icon='add' onPress={handleAddPlayer} />
       </Form>
       <HeaderList>
         <FlatList
-          data={teams}
+          data={['Team A', 'Team B']}
           keyExtractor={item => item}
           horizontal
           renderItem={({ item }) => (
