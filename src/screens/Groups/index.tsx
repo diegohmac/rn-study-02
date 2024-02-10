@@ -18,6 +18,10 @@ export default function Groups() {
     navigation.navigate('new');
   }
 
+  function handleGroupDetails(group: string) {
+    navigation.navigate('players', { group });
+  }
+
   useFocusEffect(useCallback(() => {
     async function fetchGroups() {
       try {
@@ -38,7 +42,7 @@ export default function Groups() {
       <FlatList
         data={groups}
         keyExtractor={(item) => item}
-        renderItem={({ item }) => <GroupCard title={item} />}
+        renderItem={({ item }) => <GroupCard title={item} onPress={() => handleGroupDetails(item)}/>}
         contentContainerStyle={groups.length === 0 && { flex: 1 }}
         ListEmptyComponent={() => <EmptyList message='No team registered yet' />}
       />

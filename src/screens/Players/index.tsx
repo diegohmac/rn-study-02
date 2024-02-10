@@ -21,9 +21,9 @@ type RouteParams = {
 
 export default function Players() {
 
-  const [players, setPlayers] = useState<string[]>(['Diego', 'Caio'])
-  const [teams, setTeams] = useState<string[]>(['Team A', 'Team B'])
-  const [selectedTeam, setSelectedTeam] = useState<string>('Team A')
+  const [players, setPlayers] = useState<string[]>([])
+  const [teams, setTeams] = useState<string[]>([])
+  const [selectedTeam, setSelectedTeam] = useState<string>('')
 
   const route = useRoute<RouteProp<RouteParams>>();
   const { group } = route.params
