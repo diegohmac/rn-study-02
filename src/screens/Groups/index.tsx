@@ -3,7 +3,7 @@ import { Container } from './styles';
 import { Header } from '@components/Header';
 import { GroupCard } from '@components/GroupCard';
 import { useCallback, useState } from 'react';
-import { FlatList } from 'react-native';
+import { Alert, FlatList } from 'react-native';
 import { EmptyList } from '@components/EmptyList';
 import { Button } from '@components/Button';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
@@ -29,6 +29,7 @@ export default function Groups() {
         setGroups(data);
       } catch (error) {
         console.log(error);
+        Alert.alert('Groups', 'An error occurred while fetching the teams');
       }
     }
 

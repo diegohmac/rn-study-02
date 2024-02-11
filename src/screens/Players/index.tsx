@@ -64,7 +64,8 @@ export default function Players() {
   async function handleRemovePlayer(playerName: string) {
     try {
       const updatedPlayers = await playerRemoveByGroup(group, playerName);
-      setPlayers(updatedPlayers);
+      const updatedPlayersByTeam = updatedPlayers.filter(player => player.team === selectedTeam);
+      setPlayers(updatedPlayersByTeam);
     } catch (error) {
       console.log(error);
       Alert.alert('Remove Player', 'An error occurred while removing the player');
